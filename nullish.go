@@ -1,6 +1,10 @@
 package nullish
 
-import "time"
+import (
+	"time"
+
+	"github.com/goccy/go-json"
+)
 
 var NullType = []byte("null")
 
@@ -57,5 +61,12 @@ func NewNullArrObj(arrayObject []map[string]interface{}, valid bool) NullArrObj 
 	return NullArrObj{
 		ArrObj: arrayObject,
 		Valid:  valid,
+	}
+}
+
+func NewNullJSON(json json.RawMessage, valid bool) NullJSON {
+	return NullJSON{
+		Json:  json,
+		Valid: valid,
 	}
 }
