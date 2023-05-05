@@ -41,7 +41,7 @@ func (ni *NullInt) Scan(value interface{}) error {
 	return nil
 }
 
-// MarshalJSON - marshaller for json
+// MarshalJSON method
 func (ni NullInt) MarshalJSON() ([]byte, error) {
 
 	if !ni.Valid {
@@ -51,7 +51,7 @@ func (ni NullInt) MarshalJSON() ([]byte, error) {
 	return json.Marshal(ni.Int)
 }
 
-// UnmarshalJSON - unmarshaller for json
+// UnmarshalJSON method
 func (ni *NullInt) UnmarshalJSON(data []byte) error {
 	if bytes.Equal(data, NullType) {
 		*ni = NullInt{}
