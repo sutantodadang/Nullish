@@ -52,9 +52,9 @@ func (na NullArrObj) MarshalJSON() ([]byte, error) {
 }
 
 // UnmarshalJSON method
-func (nb *NullArrObj) UnmarshalJSON(data []byte) error {
+func (na *NullArrObj) UnmarshalJSON(data []byte) error {
 	if bytes.Equal(data, NullType) {
-		*nb = NullArrObj{}
+		*na = NullArrObj{}
 		return nil
 	}
 
@@ -65,7 +65,7 @@ func (nb *NullArrObj) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	*nb = NullArrObj{ArrObj: res, Valid: true}
+	*na = NullArrObj{ArrObj: res, Valid: true}
 
 	return nil
 }
