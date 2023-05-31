@@ -56,9 +56,11 @@ func (ns *NullString) Scan(value interface{}) error {
 			return errors.New("type assertion to *RawBytes is failed")
 		}
 
-		*s = append((*s)[:0], []byte(ns.String)...)
+		var myRaw RawBytes
 
-		ns.String, ns.Valid = string(*s), true
+		myRaw = append((myRaw)[:0], *s...)
+
+		ns.String, ns.Valid = string(myRaw), true
 
 		return nil
 	}
