@@ -8,8 +8,6 @@ import (
 	"github.com/goccy/go-json"
 )
 
-type RawBytes []byte
-
 type NullString struct {
 	String string
 	Valid  bool
@@ -33,37 +31,12 @@ func (ns *NullString) Scan(value interface{}) error {
 		return nil
 	}
 
-	switch s := value.(type) {
-	case *string:
-		if s == nil {
-			return errors.New("type assertion to *string is failed")
-		}
-
-		ns.String, ns.Valid = *s, true
-		return nil
-
-	case *[]byte:
-		if s == nil {
-			return errors.New("type assertion to *byte is failed")
-		}
-
-		ns.String, ns.Valid = string(*s), true
-
-		return nil
-
-	case *RawBytes:
-		if s == nil {
-			return errors.New("type assertion to *RawBytes is failed")
-		}
-
-		var myRaw RawBytes
-
-		myRaw = append((myRaw)[:0], *s...)
-
-		ns.String, ns.Valid = string(myRaw), true
-
-		return nil
+	b, ok := value.(string)
+	if !ok {
+		return errors.New("type assertion to string is failed")
 	}
+
+	ns.String, ns.Valid = b, true
 
 	return nil
 }

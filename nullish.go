@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/goccy/go-json"
+	"github.com/google/uuid"
 )
 
 var NullType = []byte("null")
@@ -67,6 +68,13 @@ func NewNullArrObj(arrayObject []map[string]interface{}, valid bool) NullArrObj 
 func NewNullJSON(json json.RawMessage, valid bool) NullJSON {
 	return NullJSON{
 		Json:  json,
+		Valid: valid,
+	}
+}
+
+func NewNullUUID(uuid uuid.UUID, valid bool) NullUUID {
+	return NullUUID{
+		UUID:  uuid,
 		Valid: valid,
 	}
 }
