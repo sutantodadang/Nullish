@@ -3,9 +3,8 @@ package nullish
 import (
 	"bytes"
 	"database/sql/driver"
-	"encoding/binary"
 	"errors"
-	"math"
+	"strconv"
 
 	"github.com/goccy/go-json"
 )
@@ -39,8 +38,12 @@ func (nf *NullFloat) Scan(value interface{}) error {
 
 	case []byte:
 
-		bits := binary.LittleEndian.Uint64(t)
-		res = math.Float64frombits(bits)
+		f, err := strconv.ParseFloat(string(t), 64)
+		if err != nil {
+			return errors.New("type assertion []byte to float64 is failed")
+		}
+
+		res = f
 
 	case float64:
 		res = t
