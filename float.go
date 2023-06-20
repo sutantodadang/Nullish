@@ -3,7 +3,9 @@ package nullish
 import (
 	"bytes"
 	"database/sql/driver"
+	"encoding/binary"
 	"errors"
+	"math"
 
 	"github.com/goccy/go-json"
 )
@@ -31,12 +33,24 @@ func (nf *NullFloat) Scan(value interface{}) error {
 		return nil
 	}
 
-	b, ok := value.(float64)
-	if !ok {
+	var res float64
+
+	switch t := value.(type) {
+
+	case []byte:
+
+		bits := binary.LittleEndian.Uint64(t)
+		res = math.Float64frombits(bits)
+
+	case float64:
+		res = t
+
+	default:
 		return errors.New("type assertion to float64 is failed")
+
 	}
 
-	nf.Float, nf.Valid = b, true
+	nf.Float, nf.Valid = res, true
 
 	return nil
 }
