@@ -49,7 +49,7 @@ func (nt NullTime) MarshalJSON() ([]byte, error) {
 		return NullType, nil
 	}
 
-	return json.Marshal(nt.Time.Format(time.RFC3339))
+	return json.Marshal(nt.Time.Format(time.RFC3339Nano))
 }
 
 // UnmarshalJSON method
@@ -66,7 +66,7 @@ func (nt *NullTime) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	pTime, err := time.Parse(time.RFC3339, res)
+	pTime, err := time.Parse(time.RFC3339Nano, res)
 	if err != nil {
 		return err
 	}
