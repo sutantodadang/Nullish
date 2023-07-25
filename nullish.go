@@ -5,6 +5,7 @@ import (
 
 	"github.com/goccy/go-json"
 	"github.com/google/uuid"
+	"github.com/oklog/ulid/v2"
 )
 
 var NullType = []byte("null")
@@ -75,6 +76,13 @@ func NewNullJSON(json json.RawMessage, valid bool) NullJSON {
 func NewNullUUID(uuid uuid.UUID, valid bool) NullUUID {
 	return NullUUID{
 		UUID:  uuid,
+		Valid: valid,
+	}
+}
+
+func NewNullULID(ulid ulid.ULID, valid bool) NullULID {
+	return NullULID{
+		ULID:  ulid,
 		Valid: valid,
 	}
 }
