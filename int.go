@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"database/sql/driver"
 	"errors"
+	"strconv"
 
 	"github.com/goccy/go-json"
 )
@@ -31,12 +32,37 @@ func (ni *NullInt) Scan(value interface{}) error {
 		return nil
 	}
 
-	b, ok := value.(int)
-	if !ok {
-		return errors.New("type assertion to int is failed")
+	var res int
+
+	switch b := value.(type) {
+	case int8:
+
+		res = int(b)
+
+	case int16:
+
+		res = int(b)
+
+	case int32:
+
+		res = int(b)
+
+	case int64:
+
+		res = int(b)
+
+	case []byte:
+
+		a, err := strconv.Atoi(string(b))
+		if err != nil {
+			return errors.New("type assertion to int is failed")
+		}
+
+		res = a
+
 	}
 
-	ni.Int, ni.Valid = b, true
+	ni.Int, ni.Valid = res, true
 
 	return nil
 }
