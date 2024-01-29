@@ -42,7 +42,7 @@ func (nj *NullJSON) Scan(value interface{}) error {
 		if len(t) == 0 {
 			res = NullType
 		} else {
-			res = t
+			res = []byte(string(t))
 		}
 
 	default:
